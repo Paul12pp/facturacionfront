@@ -15,10 +15,10 @@ export class ClienteService {
     this.clienteRoute = getRoute(apiRoutes.cliente);
     console.log('cliente services ready');
   }
-  getall(): Observable<ClienteModel> {
+  getall(): Observable<any> {
     const route = `${this.clienteRoute}/getall`;
     // debugger;
-    return this.http.get<any>(route, {
+    return this.http.get<any[]>(route, {
       headers: {
         'Access-Control-Allow-Origin': '*',
         'Content-Type': 'application/json'

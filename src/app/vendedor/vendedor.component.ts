@@ -14,7 +14,7 @@ export class VendedorComponent implements OnInit {
 
   
   model: VendedorModel;
-  vendedores: VendedorModel[] = [];
+  vendedores: any[] = [];
   constructor(private services: VendedorService, private toastr: ToastrService) { }
 
   ngOnInit() {

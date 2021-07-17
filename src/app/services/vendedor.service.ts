@@ -15,7 +15,7 @@ export class VendedorService {
     this.vendedorRoute = getRoute(apiRoutes.vendedor);
     console.log('vend services ready');
   }
-  getall(): Observable<VendedorModel> {
+  getall(): Observable<any> {
     const route = `${this.vendedorRoute}/getall`;
     return this.http.get<any>(route, {
       headers: {

@@ -14,7 +14,7 @@ export class ArticuloService {
     this.articuloRoute = getRoute(apiRoutes.articulo);
     console.log('art services ready');
   }
-  getall(): Observable<ArticuloModel> {
+  getall(): Observable<any> {
     const route = `${this.articuloRoute}/getall`;
     return this.http.get<any>(route, {
       headers: {

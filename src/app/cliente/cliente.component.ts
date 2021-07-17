@@ -4,6 +4,7 @@ import { ToastrService } from 'ngx-toastr';
 import { ClienteModel } from '../model/cliente.model';
 import { ClienteService } from '../services/cliente.service';
 import Swal from 'sweetalert2';
+import { ValidateTool } from '../utils/validate-tool';
 
 @Component({
   selector: 'app-cliente',
@@ -13,7 +14,7 @@ import Swal from 'sweetalert2';
 export class ClienteComponent implements OnInit {
 
   model: ClienteModel;
-  clientes: ClienteModel[] = [];
+  clientes: any[] = [];
   constructor(private services: ClienteService, private toastr: ToastrService) { }
 
   ngOnInit() {
@@ -41,33 +42,41 @@ export class ClienteComponent implements OnInit {
       }
     });
     const id = form.value.id
-    if (form.valid) {
-      const values = form.value;
-      //delete values.id;
-      values.estado = values.estado === 'true' ? true : false;
-      console.log('aqui', values);
-      if (id !== null && id !== 0 && id !== undefined) {
-        this.services.update(values).subscribe(result => {
-          console.log(result);
-          form.resetForm();
-          this.refresh();
-          Swal.close();
-          console.log('after', this.model);
-          this.msg('Guardado', 1);
-        });
+    if (ValidateTool.validDominicanID(form.value.cedula)) {
+      if (form.valid) {
+        const values = form.value;
+        //delete values.id;
+        values.estado = values.estado === 'true' ? true : false;
+        console.log('aqui', values);
+        if (id !== null && id !== 0 && id !== undefined) {
+          this.services.update(values).subscribe(result => {
+            console.log(result);
+            form.resetForm();
+            this.refresh();
+            Swal.close();
+            console.log('after', this.model);
+            this.msg('Guardado', 1);
+          });
+        } else {
+          delete values.id;
+          this.services.save(values).subscribe(result => {
+            console.log(result);
+            form.resetForm();
+            this.refresh();
+            Swal.close();
+            this.msg('Error', 2);
+          });
+        }
       } else {
-        delete values.id;
-        this.services.save(values).subscribe(result => {
-          console.log(result);
-          form.resetForm();
-          this.refresh();
-          Swal.close();
-          this.msg('Error', 2);
-        });
+        this.msg('Datos incompletos', 2);
+        Swal.close();
       }
     } else {
-      this.msg('Datos incompletos', 2);
-      Swal.close();
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Cédula invalidad',
+      });
     }
   }
   edit(id: number) {
@@ -84,6 +93,10 @@ export class ClienteComponent implements OnInit {
       Swal.close();
     });
     console.log('edit');
+  }
+  pattern(value: any) {
+    console.log(value)
+    this.model.cedula = value.replace(/[^0-9]*/g, '');
   }
 
   clean() {

@@ -114,5 +114,4 @@ export class ArticuloComponent implements OnInit {
     }
   }
 
-
 }

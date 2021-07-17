@@ -67,10 +67,10 @@
                                     <table class="table">
                                         <thead class=" text-primary">
                                             <th>
-                                                Codigo
+                                                Código
                                             </th>
                                             <th>
-                                                Descripcion
+                                                Descripción
                                             </th>
                                             <th>
                                                 Precio Unitario
@@ -78,14 +78,14 @@
                                             <th class="text-right">
                                                 Estado
                                             </th>
-                                            <th>Accion</th>
+                                            <th>Acción</th>
                                         </thead>
                                         <tbody>
                                             <tr *ngFor="let item of articulos">
                                                 <td>{{item.id}}</td>
                                                 <td>{{item.descripcion}}</td>
-                                                <td>{{item.precioUnitario}}</td>
-                                                <td>{{item.estado}}</td>
+                                                <td>{{item.precioUnitario|currency}}</td>
+                                                <td>{{item.estado?'Activo':'Inactivo'}}</td>
                                                 <td>
                                                     <button (click)="edit(item.id)" class="btn btn-warning">Editar</button>
                                                 </td>
