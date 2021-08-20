@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -13,10 +13,13 @@ import { NotificationsComponent } from '../../notifications/notifications.compon
 import { ChartsModule } from 'ng2-charts';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrModule } from 'ngx-toastr';
+import { MatTableModule } from '@angular/material/table';
 import { UpgradeComponent } from '../../upgrade/upgrade.component';
 import { ClienteComponent } from '../../cliente/cliente.component';
 import { ArticuloComponent } from '../../articulo/articulo.component';
 import { VendedorComponent } from '../../vendedor/vendedor.component';
+import { AsientoComponent } from '../../asiento/asiento.component';
+import { FacturacionComponent } from '../../facturacion/facturacion.component';
 
 @NgModule({
   imports: [
@@ -26,7 +29,8 @@ import { VendedorComponent } from '../../vendedor/vendedor.component';
     ReactiveFormsModule,
     ChartsModule,
     NgbModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    MatTableModule
   ],
   declarations: [
     DashboardComponent,
@@ -39,8 +43,12 @@ import { VendedorComponent } from '../../vendedor/vendedor.component';
     NotificationsComponent,
     ClienteComponent,
     ArticuloComponent,
-    VendedorComponent
-  ]
+    VendedorComponent,
+    AsientoComponent,
+    FacturacionComponent
+  ],
+  schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
+
 })
 
 export class AdminLayoutModule { }

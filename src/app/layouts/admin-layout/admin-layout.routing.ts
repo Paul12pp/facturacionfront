@@ -11,12 +11,16 @@ import { UpgradeComponent } from '../../upgrade/upgrade.component';
 import { ClienteComponent } from '../../cliente/cliente.component';
 import { ArticuloComponent } from '../../articulo/articulo.component';
 import { VendedorComponent } from '../../vendedor/vendedor.component';
+import { FacturacionComponent } from '../../facturacion/facturacion.component';
+import { AsientoComponent } from '../../asiento/asiento.component';
 
 export const AdminLayoutRoutes: Routes = [
     { path: 'dashboard',      component: DashboardComponent },
     { path: 'cliente',      component: ClienteComponent },
     { path: 'articulo',      component: ArticuloComponent },
     { path: 'vendedor',      component: VendedorComponent },
+    { path: 'facturacion',      component: FacturacionComponent },
+    { path: 'asiento',      component: AsientoComponent },
     // { path: 'user-profile',   component: UserProfileComponent },
     // { path: 'table-list',     component: TableListComponent },
     // { path: 'typography',     component: TypographyComponent },
