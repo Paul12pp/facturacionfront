@@ -93,6 +93,7 @@ export class FacturacionComponent implements OnInit {
     const id = form.value.id
     if (form.valid) {
       const values = form.value;
+      values.detalle = this.rows;
       //delete values.id;
       values.estado = values.estado === 'true' ? true : false;
       console.log('aqui', values);
@@ -100,6 +101,7 @@ export class FacturacionComponent implements OnInit {
         this.services.update(values).subscribe(result => {
           console.log(result);
           form.resetForm();
+          this.clean();
           Swal.close();
           console.log('after', this.model);
           this.msg('Guardado', 1);
@@ -109,8 +111,9 @@ export class FacturacionComponent implements OnInit {
         this.services.save(values).subscribe(result => {
           console.log(result);
           form.resetForm();
+          this.clean();
           Swal.close();
-          this.msg('Error', 2);
+          this.msg('Guardado!!', 1);
         });
       }
     } else {
@@ -118,7 +121,7 @@ export class FacturacionComponent implements OnInit {
       Swal.close();
     }
   }
-  edit(id: number) {
+  edit() {
     Swal.fire({
       title: 'Obtenindo datos',
       showConfirmButton: false,
@@ -126,10 +129,17 @@ export class FacturacionComponent implements OnInit {
         Swal.showLoading();
       }
     });
-    this.services.getbyid(id).subscribe(result => {
-      this.model = result;
-      console.log('factura', this.model);
-      Swal.close();
+    this.services.getbyid(this.model.id).subscribe(result => {
+      if (result) {
+        this.model = result;
+        this.rows = result.detalle;
+        this.dataSource = new MatTableDataSource(this.rows)
+        console.log('factura', this.model);
+        Swal.close();
+      } else {
+        Swal.close();
+        this.msg('No encontrado', 2)
+      }
     });
     console.log('edit');
   }

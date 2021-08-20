@@ -54,7 +54,7 @@ export class VendedorComponent implements OnInit {
           this.refresh();
           Swal.close();
           console.log('after', this.model);
-          this.msg('Guardado', 1);
+          this.msg('Actualizado!!', 1);
         });
       } else {
         delete values.id;
@@ -63,7 +63,7 @@ export class VendedorComponent implements OnInit {
           form.resetForm();
           this.refresh();
           Swal.close();
-          this.msg('Error', 2);
+          this.msg('Guardado!!', 1);
         });
       }
     } else {

@@ -14,7 +14,7 @@
                                 <!-- <input type="text" class="form-control" name="id" hidden> -->
                                 <div class="form-group">
                                     <label>Código</label>
-                                    <input type="text" class="form-control" [(ngModel)]="model.id" name="id" placeholder="Código">
+                                    <input type="text" class="form-control" [(ngModel)]="model.id" name="id" (keyup.enter)="edit()" placeholder="Código">
                                 </div>
                             </div>
                             <div class="col-md-6 pl-1">
@@ -29,7 +29,7 @@
                                 <div class="form-group">
                                     <label>Cliente</label>
                                     <select class="form-control" [(ngModel)]="model.clienteId" name="clienteId" required>
-                                       <option value="">Seleccione un cliente</option>
+                                       <option value="0">Seleccione un cliente</option>
                                        <option *ngFor="let item of clientes" [value]="item.id">{{item.nombreComercial}}</option>
                                    </select>
                                 </div>
@@ -38,7 +38,7 @@
                                 <div class="form-group">
                                     <label>Vendedor</label>
                                     <select class="form-control" [(ngModel)]="model.vendedorId" name="vendedorId" required>
-                                       <option value="">Seleccione un vendedor</option>
+                                       <option value="0">Seleccione un vendedor</option>
                                        <option *ngFor="let item of vendedores" [value]="item.id">{{item.nombre}}</option>
                                    </select>
                                 </div>
