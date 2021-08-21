@@ -7,6 +7,7 @@ import { FacturacionModel } from '../model/facturacion.model';
 import { FacturacionService } from '../services/facturacion.service';
 import { ClienteModel } from '../model/cliente.model';
 import { VendedorModel } from '../model/vendedor.model';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-facturacion',
@@ -23,9 +24,24 @@ export class FacturacionComponent implements OnInit {
   model: FacturacionModel;
   clientes: ClienteModel[] = [];
   vendedores: VendedorModel[] = [];
-  constructor(private services: FacturacionService, private toastr: ToastrService) { }
+  total = 0;
+  constructor(private services: FacturacionService, private toastr: ToastrService,
+    private _Activatedroute: ActivatedRoute) { }
 
   ngOnInit(): void {
+    this._Activatedroute.paramMap.subscribe(params => {
+      console.log(params);
+      const id = params.get('id');
+      if (id) {
+        this.services.getbyid(Number(id))
+          .subscribe(result => {
+            this.model = result;
+            this.model.fecha = new Date(result.fecha).toISOString().slice(0, 10); this.rows = result.detalle;
+            this.dataSource = new MatTableDataSource(this.rows);
+            this.change();
+          });
+      }
+    });
     this.clean();
     this.services.getallC()
       .subscribe(result => {
@@ -56,6 +72,14 @@ export class FacturacionComponent implements OnInit {
     // this.dataSource = new MatTableDataSource(this.rows);
     this.dataSource = new MatTableDataSource(this.rows);
   }
+  change() {
+    let temp = 0;
+    this.rows.forEach(value => {
+      temp += value.cantidad * value.precioUnitario;
+      this.total = temp;
+    });
+
+  }
   findArticle(i: number, id: number) {
     this.services.getbyidA(id)
       .subscribe(result => {
@@ -74,7 +98,7 @@ export class FacturacionComponent implements OnInit {
       clienteId: 0,
       vendedorId: 0,
       comentario: '',
-      fecha: new Date().toISOString(),
+      fecha: new Date().toISOString().slice(0, 10),
       detalle: []
     };
     this.rows = [{ id: 0, articuloId: 0, precioUnitario: 0, cantidad: 0, facturacionId: 0 }]
@@ -100,8 +124,8 @@ export class FacturacionComponent implements OnInit {
       if (id !== null && id !== 0 && id !== undefined) {
         this.services.update(values).subscribe(result => {
           console.log(result);
-          form.resetForm();
-          this.clean();
+          //form.resetForm();
+          //this.clean();
           Swal.close();
           console.log('after', this.model);
           this.msg('Guardado', 1);
@@ -110,8 +134,8 @@ export class FacturacionComponent implements OnInit {
         delete values.id;
         this.services.save(values).subscribe(result => {
           console.log(result);
-          form.resetForm();
-          this.clean();
+          //form.resetForm();
+          //this.clean();
           Swal.close();
           this.msg('Guardado!!', 1);
         });
@@ -132,8 +156,10 @@ export class FacturacionComponent implements OnInit {
     this.services.getbyid(this.model.id).subscribe(result => {
       if (result) {
         this.model = result;
+        this.model.fecha = new Date(result.fecha).toISOString().slice(0, 10);
         this.rows = result.detalle;
         this.dataSource = new MatTableDataSource(this.rows)
+        this.change();
         console.log('factura', this.model);
         Swal.close();
       } else {
@@ -162,6 +188,25 @@ export class FacturacionComponent implements OnInit {
         positionClass: 'toast-top-right'
       });
     }
+  }
+
+  contabilizar() {
+    Swal.fire({
+      title: 'Guardando asiento',
+      showConfirmButton: false,
+      willOpen: () => {
+        Swal.showLoading();
+      }
+    });
+    this.services.contabilizar(this.model)
+      .subscribe(result => {
+        Swal.close();
+        this.msg('Asiento Contable ha sido obtenido y actualizado', 1);
+        this.edit();
+      }, error => {
+        Swal.close();
+        this.msg('Ha ocurrido un error guardando el asiento', 2);
+      });
   }
 
 }

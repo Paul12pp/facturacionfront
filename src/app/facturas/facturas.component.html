@@ -1,0 +1,48 @@
+<div class="panel-header panel-header-sm">
+</div>
+<div class="main-content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card" id="print-section">
+                <div class="card-header">
+                    <h4 class="card-title"> Facturas </h4>
+                    <button [disabled]="facturas.length===0" class="btn btn-secondary text-right" printSectionId="print-section" ngxPrint><i class='bx bx-printer'></i> Exportar</button>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead class=" text-primary">
+                                <th>
+                                    Código
+                                </th>
+                                <th>
+                                    Cliente
+                                </th>
+                                <th>
+                                    Vendedor
+                                </th>
+                                <th>
+                                    Comentario
+                                </th>
+                                <th>Fecha</th>
+                                <th>Acción</th>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of facturas">
+                                    <td>{{item.id}}</td>
+                                    <td>{{item.cliente}}</td>
+                                    <td>{{item.vendedor}}</td>
+                                    <td>{{item.comentario}}</td>
+                                    <td>{{item.fecha|date : 'dd-MM-yyyy'}}</td>
+                                    <td>
+                                        <a [routerLink]="['/facturacion', item.id]" class="btn btn-warning">Ver</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

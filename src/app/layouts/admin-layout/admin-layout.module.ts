@@ -20,6 +20,8 @@ import { ArticuloComponent } from '../../articulo/articulo.component';
 import { VendedorComponent } from '../../vendedor/vendedor.component';
 import { AsientoComponent } from '../../asiento/asiento.component';
 import { FacturacionComponent } from '../../facturacion/facturacion.component';
+import { FacturasComponent } from '../../facturas/facturas.component';
+import { NgxPrintModule } from 'ngx-print';
 
 @NgModule({
   imports: [
@@ -30,7 +32,8 @@ import { FacturacionComponent } from '../../facturacion/facturacion.component';
     ChartsModule,
     NgbModule,
     ToastrModule.forRoot(),
-    MatTableModule
+    MatTableModule,
+    NgxPrintModule
   ],
   declarations: [
     DashboardComponent,
@@ -45,7 +48,8 @@ import { FacturacionComponent } from '../../facturacion/facturacion.component';
     ArticuloComponent,
     VendedorComponent,
     AsientoComponent,
-    FacturacionComponent
+    FacturacionComponent,
+    FacturasComponent
   ],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 

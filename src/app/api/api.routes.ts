@@ -5,6 +5,7 @@ export const apiRoutes = {
     cliente: '/api/Cliente',
     vendedor: '/api/Vendedor',
     facturacion: '/api/Facturacion',
+    reporte: '/api/Reporte',
     auxiliary: {
         accounting: {
             centroCosto: '/accounting/api/CentroCosto',

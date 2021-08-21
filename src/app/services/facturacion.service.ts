@@ -39,6 +39,10 @@ export class FacturacionService {
     const route = `${this.facturacionRoute}`;
     return this.http.post(route, model);
   }
+  contabilizar(model: any) {
+    const route = `${this.facturacionRoute}/Contabilizar`;
+    return this.http.post(route, model);
+  }
   update(model: any) {
     const route = `${this.facturacionRoute}`;
     return this.http.put(route, model);

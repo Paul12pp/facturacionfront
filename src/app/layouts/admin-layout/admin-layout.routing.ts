@@ -13,14 +13,17 @@ import { ArticuloComponent } from '../../articulo/articulo.component';
 import { VendedorComponent } from '../../vendedor/vendedor.component';
 import { FacturacionComponent } from '../../facturacion/facturacion.component';
 import { AsientoComponent } from '../../asiento/asiento.component';
+import { FacturasComponent } from '../../facturas/facturas.component';
 
 export const AdminLayoutRoutes: Routes = [
     { path: 'dashboard',      component: DashboardComponent },
     { path: 'cliente',      component: ClienteComponent },
     { path: 'articulo',      component: ArticuloComponent },
     { path: 'vendedor',      component: VendedorComponent },
+    { path: 'facturacion/:id',      component: FacturacionComponent },
     { path: 'facturacion',      component: FacturacionComponent },
     { path: 'asiento',      component: AsientoComponent },
+    { path: 'facturas',      component: FacturasComponent },
     // { path: 'user-profile',   component: UserProfileComponent },
     // { path: 'table-list',     component: TableListComponent },
     // { path: 'typography',     component: TypographyComponent },

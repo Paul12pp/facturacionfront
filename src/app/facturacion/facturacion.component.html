@@ -6,9 +6,18 @@
             <div class="card">
                 <div class="card-header">
                     <h5 class="title">Facturación</h5>
+                    <a [routerLink]="['/facturas']">Ver facturas</a>
                 </div>
                 <div class="card-body">
                     <form #f="ngForm">
+                        <div class="row">
+                            <div class="col-md-6 pr-1" *ngIf="model.detalle.length>0">
+                                <div class="form-group">
+                                    <label>Asiento</label>
+                                    <input *ngIf="model.detalle[0].idAsiento" class="form-control" [value]="model.detalle[0].idAsiento" readonly>
+                                </div>
+                            </div>
+                        </div>
                         <div class="row">
                             <div class="col-md-6 pr-1">
                                 <!-- <input type="text" class="form-control" name="id" hidden> -->
@@ -45,8 +54,10 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-6 pl-3">
-                                <button type="button" (click)="onSubmit(f)" class="btn btn-primary">Guardar</button>
+                            <div class="col-md-10 pl-3">
+                                <button type="button" (click)="onSubmit(f)" class="btn btn-success">Guardar</button> ||
+                                <button [disabled]="model.id==0" type="button" (click)="contabilizar()" class="btn btn-success">Contabilizar</button> ||
+                                <button type="button" (click)="clean()" class="btn btn-warning">Limpiar</button>
                             </div>
                         </div>
                         <div class="row">
@@ -66,14 +77,14 @@
                                         <ng-container matColumnDef="cantidad">
                                             <mat-header-cell *matHeaderCellDef> Cantidad </mat-header-cell>
                                             <mat-cell *matCellDef="let element; let i = index;">
-                                                <input matInput type="number" class="form-control" name="cantidad" [(ngModel)]="element.cantidad" />
+                                                <input matInput type="number" class="form-control" name="cantidad" [(ngModel)]="element.cantidad" (change)="change()" />
                                             </mat-cell>
                                         </ng-container>
                                         <ng-container matColumnDef="actions">
                                             <mat-header-cell *matHeaderCellDef> Acciones </mat-header-cell>
                                             <mat-cell *matCellDef="let element; let i = index;">
-                                                <button (click)="agregar()" class="btn btn-warning">Agregar</button>
-                                                <button (click)="borrar(i)" class="btn btn-primary">Borrar</button>
+                                                <button type="button" (click)="agregar()" class="btn btn-warning">Agregar</button>
+                                                <button type="button" (click)="borrar(i)" class="btn btn-primary">Borrar</button>
                                             </mat-cell>
                                         </ng-container>
                                         <mat-header-row *matHeaderRowDef="displayedColumns">
@@ -81,6 +92,9 @@
                                         <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
                                     </mat-table>
 
+                                </div>
+                                <div class="row pt-5">
+                                    <h4>Total: {{total|currency}}</h4>
                                 </div>
                                 <div class="row pt-5">
                                     <div class="col-md-6 pr-1">

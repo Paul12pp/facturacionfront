@@ -13,4 +13,5 @@ export interface FacturacionDetalle {
     cantidad: number;
     precioUnitario: number;
     facturacionId: number;
+    idAsiento: number;
 }
